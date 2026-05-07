@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🎬 Movie Universe Explorer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #121022 radial-gradient(circle at 30% 60%, #232b52 0%, #121022 80%);
+      color: #fff;
+      font-family: 'Roboto', Arial, sans-serif;
+      text-align: center;
+      padding: 38px 0;
+      min-height: 100vh;
+    }
+    h1 {
+      font-family: 'Orbitron', 'Roboto', sans-serif;
+      color: #35ffe7;
+      font-size: 2.7rem;
+      letter-spacing: 1.7px;
+      text-shadow: 0 0 18px #1affd5, 0 0 40px #339cff44;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    h1 .movie-icon {
+      font-size: 2.5rem;
+      filter: drop-shadow(0 0 10px #ab42ff);
+      margin-right: 12px;
+    }
+    .neon-box {
+      border: 2px solid #35ffe7cc;
+      border-radius: 16px;
+      background: rgba(38,54,80,0.24);
+      box-shadow: 0 0 40px #35ffe755, 0 0 4px #ab42ff;
+      margin: 0 auto 38px auto;
+      max-width: 700px;
+      padding: 24px 32px 30px 32px;
+      position: relative;
+    }
+    input[type="text"] {
+      width: 375px;
+      padding: 13px 17px;
+      border-radius: 7px;
+      border: 1.5px solid #35ffe7;
+      margin-top: 22px;
+      background: #1c1c2e;
+      color: #35ffe7;
+      font-size: 1.07rem;
+      outline: none;
+      box-shadow: 0 1px 9px #1affd510;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus {
+      border-color: #ab42ff;
+    }
+    button {
+      padding: 12px 32px;
+      margin-top: 18px;
+      background: linear-gradient(90deg, #35ffe7 0%, #ab42ff 100%);
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1.13rem;
+      color: #161022;
+      cursor: pointer;
+      box-shadow: 0 0 16px #35ffe7bb, 0 0 38px #ab42ff44;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #ab42ff 0%, #35ffe7 100%);
+      box-shadow: 0 0 30px #ab42ff77, 0 0 12px #35ffe7aa;
+      color: #fff;
+    }
+    ul {
+      margin-top: 36px;
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      padding: 13px;
+      margin: 13px auto;
+      background: rgba(81, 99, 143, 0.33);
+      border-radius: 9px;
+      width: 375px;
+      box-shadow: 0 0 7px #1affd555;
+      font-size: 1.1rem;
+      display: block;
+      min-height: unset;
+      gap: 0;
+    }
+    .header {
+      background: none;
+      font-weight: bold;
+      color: #35ffe7;
+      font-size: 1.12rem;
+      box-shadow: none;
+      text-shadow: 0 0 12px #35ffe7bd;
+      justify-content: flex-start;
+      display: block;
+    }
+    .error {
+      color: #e96797;
+      background: none;
+      box-shadow: none;
+      display: block;
+    }
+    .movie-icon {
+      vertical-align: middle;
+    }
+    .external-link {
+      display: inline-block;
+      margin-top: 38px;
+      padding: 14px 34px;
+      font-size: 1.1rem;
+      background: linear-gradient(90deg, #e96797 0%, #ab42ff 100%);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 0 25px #e9679777, 0 0 32px #ab42ff44;
+      text-decoration: none;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .external-link:hover {
+      background: linear-gradient(90deg, #ab42ff 0%, #e96797 100%);
+      color: #35ffe7;
+      box-shadow: 0 0 32px #ab42ffbb, 0 0 24px #e9679777;
+    }
+    a.movie-link {
+      color: #35ffe7;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.2s, text-shadow 0.2s;
+      font-size: 1.08rem;
+      vertical-align: middle;
+    }
+    a.movie-link:hover {
+      color: #ab42ff;
+      text-shadow: 0 0 7px #ab42ff99, 0 0 10px #35ffe799;
+    }
+    @media (max-width: 500px) {
+      body {padding: 10px;}
+      .neon-box {padding: 12px 7px;}
+      input[type="text"], li {width: 95%;}
+    }
+  </style>
+</head>
+<body>
+  <h1><span class="movie-icon">🍿</span>Movie Universe Explorer</h1>
+  <div class="neon-box">
+    <div style="color: #e96797; font-size:1.13rem; margin-bottom:5px;">Welcome!</div>
+    <div style="color: #cdcbff; font-size:1rem;">
+      Discover movies & series from all your favorite streaming worlds.<br>
+      <span style="color:#ffe897;">Try: <b>Interstellar, 3 Idiots, Dune, RRR, Marvel, Pushpa, Action, Comedy, Family, Kids...</b></span>
+    </div>
+    <input type="text" id="movieInput" placeholder="Search movie or genre...">
+    <br>
+    <button onclick="recommend()">Show Recommendations</button>
+    <ul id="recommendations"></ul>
+    <a href="https://net2025.cc/home" target="_blank" class="external-link">
+      🌐 Watch Full Movies & Series (Netflix, Prime, Hotstar & More)
+    </a>
+  </div>
+  <script>
+const recommendationsMap = {
+  // English blockbusters
+  "inception": ["Interstellar", "Tenet", "The Prestige", "Shutter Island", "Blade Runner 2049"],
+  "avatar": ["Avatar: The Way of Water", "Guardians of the Galaxy", "Star Wars", "The Martian", "Dune"],
+  "joker": ["The Dark Knight", "V for Vendetta", "Logan", "Taxi Driver", "Fight Club"],
+  "avengers": ["Iron Man", "Thor: Ragnarok", "Captain America: Civil War", "Guardians of the Galaxy", "Doctor Strange"],
+  "mcu": ["Avengers: Endgame", "Black Panther", "Spider-Man: No Way Home", "Shang-Chi", "Thor: Ragnarok"],
+  "marvel": ["Spider-Man: No Way Home", "Iron Man", "Black Panther", "Eternals", "Shang-Chi"],
+  "iron man": ["Iron Man 2", "Iron Man 3", "Avengers: Endgame", "Spider-Man: Homecoming"],
+  "john wick": ["John Wick 2", "John Wick 3", "Nobody", "The Equalizer", "Atomic Blonde"],
+  "spider-man": ["Spider-Man: Homecoming", "Spider-Man: Into the Spider-Verse", "No Way Home", "Venom"],
+  "star wars": ["Rogue One", "The Force Awakens", "Solo", "Star Trek"],
+  "interstellar": ["Gravity", "Arrival", "Dune", "Ad Astra", "Sunshine"],
+  "dune": ["Blade Runner 2049", "Arrival", "Mad Max: Fury Road", "Oblivion"],
+
+  // Bollywood blockbusters & pan-India hits
+  "3 idiots": ["Taare Zameen Par", "Chhichhore", "PK", "Munna Bhai MBBS", "Rang De Basanti"],
+  "pk": ["3 Idiots", "Lage Raho Munna Bhai", "Barfi!", "Taare Zameen Par"],
+  "pushpa": ["KGF", "Baahubali", "Vikram", "RRR", "Sarkar"],
+  "rrr": ["Baahubali", "Pushpa", "KGF", "Vikram", "Bahubali 2"],
+  "kgf": ["Vikram", "Baahubali", "RRR", "Pushpa", "War"],
+  "bahubali": ["Bahubali 2", "RRR", "KGF", "Pushpa", "Baahubali: The Beginning"],
+  "sholay": ["Deewar", "Zanjeer", "Don", "Agneepath", "Amar Akbar Anthony"],
+  "dangal": ["Chak De! India", "Sultan", "Mary Kom", "Bhaag Milkha Bhaag"],
+  "gully boy": ["Rock On!!", "Zindagi Na Milegi Dobara", "Andhadhun", "Secret Superstar"],
+  "kabir singh": ["Arjun Reddy", "Sanam Teri Kasam", "Tamasha", "Rockstar"],
+
+  // Genres, with extra support for plural/common phrasing
+  "action": ["John Wick", "Gladiator", "Die Hard", "War", "KGF", "Baahubali"],
+  "action movies": ["John Wick", "Avengers: Endgame", "KGF", "Mad Max: Fury Road"],
+  "comedy": ["The Hangover", "Hera Pheri", "Superbad", "Chupke Chupke", "Andaz Apna Apna"],
+  "romance": ["The Notebook", "Titanic", "Yeh Jawaani Hai Deewani", "La La Land", "Love Aaj Kal"],
+  "romantic": ["Dilwale Dulhania Le Jayenge", "Jab We Met", "The Notebook", "La La Land", "Aashiqui 2"],
+  "thriller": ["Andhadhun", "Kahaani", "Gone Girl", "Se7en", "Talaash"],
+  "drama": ["Forrest Gump", "Dangal", "The Shawshank Redemption", "Barfi!"],
+  "horror": ["The Conjuring", "Stree", "It", "Tumbbad", "Bhoot"],
+  "sci-fi": ["Inception", "Dune", "Interstellar", "Blade Runner 2049", "Arrival"],
+  "science fiction": ["Inception", "Dune", "Arrival", "Edge of Tomorrow"],
+  "family": ["Chhichhore", "Home Alone", "Finding Nemo", "Taare Zameen Par"],
+  "crime": ["Andhadhun", "Gangs of Wasseypur", "Pulp Fiction", "Dhoom"],
+  "animation": ["Frozen", "Minions", "Chhota Bheem", "Kung Fu Panda"],
+  "kids": ["Frozen", "Finding Nemo", "Chhota Bheem", "Kung Fu Panda", "Tangled"],
+  "adventure": ["Pirates of the Caribbean", "Indiana Jones", "Jumanji", "Bahubali"],
+  "superhero": ["Spider-Man: No Way Home", "The Dark Knight", "Black Panther", "Wonder Woman", "Deadpool"],
+  "fantasy": ["Harry Potter", "Lord of the Rings", "Baahubali", "Chronicles of Narnia"],
+  "biopic": ["MS Dhoni", "Dangal", "The Social Network", "Neerja"],
+  "sports": ["Chak De! India", "Dangal", "Bhaag Milkha Bhaag", "Lagaan"],
+  "musical": ["Gully Boy", "La La Land", "Rock On!!", "Aashiqui 2"],
+  // and many more genres you can add!
+};
+
+function recommend() {
+  const inputRaw = document.getElementById("movieInput").value;
+  const input = inputRaw.toLowerCase().trim();
+  const resultBox = document.getElementById("recommendations");
+  resultBox.innerHTML = "";
+  if (!input) {
+    const li = document.createElement("li");
+    li.textContent = "🚦 Please enter a movie name, genre, or universe to get inspired!";
+    li.className = "error";
+    resultBox.appendChild(li);
+    return;
+  }
+  if (recommendationsMap[input]) {
+    const header = document.createElement("li");
+    header.textContent = `✨ Because you searched "${inputRaw}", you might love:`;
+    header.className = "header";
+    resultBox.appendChild(header);
+    recommendationsMap[input].forEach(m => {
+      const li = document.createElement("li");
+      const movieUrl = `https://net2025.cc/home?search=${encodeURIComponent(m)}`;
+      li.innerHTML = `<a href="${movieUrl}" class="movie-link" target="_blank">${m}</a>`;
+      resultBox.appendChild(li);
+    });
+  } else {
+    const li = document.createElement("li");
+    li.innerHTML = `❌ No direct matches for "<strong>${inputRaw}</strong>".<br>Try any new movie, Bollywood/English film, or genre!<br>Examples: 3 Idiots, Avengers, Action, Comedy, Family, Kids, Sci-fi, Romance, Pushpa, Baahubali...`;
+    li.className = "error";
+    resultBox.appendChild(li);
+  }
+}
+  </script>
+</body>
+</html>
